@@ -1,3 +1,4 @@
+from data.models.common.constants import FeeType
 from data.models.exceptions.job import AmountNotPresentException, UserIDNotPresentException, FeeTypeNotPresentException
 
 REQUIRED_JOB_PROPS = {'amount': AmountNotPresentException,
@@ -13,4 +14,7 @@ class Job:
 
         self.amount = kwargs['amount']
         self.user_id = kwargs['user_id']
-        self.fee_type = kwargs['fee_type']
+        try:
+            self.fee_type = FeeType[kwargs['fee_type']]
+        except KeyError:
+            raise TypeError("Fee Type is invalid") from None

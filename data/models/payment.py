@@ -1,5 +1,6 @@
 from data.models.common.constants import PaymentStatus
 from data.models.exceptions.payment import JobNotPresentException, InvalidJobTypeException, EmptyJobException
+from data.access.payment import add_payment_to_storage
 
 REQUIRED_PROPS = {
     'job': JobNotPresentException
@@ -20,3 +21,6 @@ class Payment:
 
         if not self.job:
             raise EmptyJobException
+
+    def save(self):
+        return add_payment_to_storage(self)
